@@ -8,7 +8,7 @@ class DarrickAI:
     def __init__(self):
         self.model_1x2 = RandomForestClassifier(n_estimators=100)
         self.model_over = XGBClassifier()
-        self Trained = False
+        self.Trained = False  # ← CORRIGÉ: self.Trained (pas d'espace)
     
     def calculate_value_bet(self, odds, true_prob):
         """Value = (prob * odds - 1)"""
@@ -21,7 +21,7 @@ class DarrickAI:
         odds_away = match['odds_away']
         odds_draw = match.get('odds_draw', 3.5)
         
-        # Probabilités ML simulées (entraînées)
+        # Probabilités ML simulées
         home_win_prob = max(0.45, 1 / (1 + np.exp(odds_home - odds_away)))
         away_win_prob = max(0.45, 1 / (1 + np.exp(odds_away - odds_home)))
         draw_prob = 0.25
@@ -39,7 +39,7 @@ class DarrickAI:
         best_market = max(markets, key=markets.get)
         confidence = max(home_win_prob, away_win_prob, 0.62)
         
-        if markets[best_market] > 0.15 and confidence > 0.65:  # Value + confiance
+        if markets[best_market] > 0.15 and confidence > 0.65:
             prediction = "2-1" if best_market.startswith('1X2_Home') else "1-2"
             return {
                 'best_market': best_market,
@@ -51,4 +51,6 @@ class DarrickAI:
             }
         return None
 
+# Instance globale
 darrick_ai = DarrickAI()
+    
